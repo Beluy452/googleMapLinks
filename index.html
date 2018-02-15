@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .map-container {
+            overflow: hidden;
+        }
+
+        .left {
+            float: left;
+            width: 60%;
+        }
+
+        .right {
+            float: left;
+            width: 40%;
+        }
+
+        .link {
+            display: block;
+        }
+
+        #map {
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="map-container">
+    <div class="left">
+        <div id="map"></div>
+    </div>
+    <div class="right">
+
+        <a href="#" class="link" data-lat="46.2836907" data-lng="23.9321507">link map</a>
+
+        <a href="#" class="link" data-lat="48.2836907" data-lng="23.9321507">link map</a>
+
+        <a href="#" class="link" data-lat="50.2836907" data-lng="23.9321507">link map</a>
+
+        <a href="#" class="link" data-lat="52.2836907" data-lng="23.9321507">link map</a>
+
+    </div>
+</div>
+
+<script>
+
+    function initMap() {
+
+        const options = {
+            zoom: 11,
+            disableDefaultUI: true,
+            center: {
+                lat: 46.2836907,
+                lng: 23.9321507
+            }
+        };
+
+        map = new google.maps.Map(document.getElementById('map'), options);
+
+        new google.maps.Marker({
+            position: {
+                lat: 46.2836907,
+                lng: 23.9321507
+            },
+            map: map
+        });
+
+
+        const link = document.querySelectorAll(".link");
+
+        for (let i = 0; i < link.length; i++) {
+            link[i].onclick = setCenterMap;
+        }
+
+        function setCenterMap(e) {
+            e.preventDefault();
+
+            const lat = +this.getAttribute("data-lat");
+            const lng = +this.getAttribute("data-lng");
+
+            new google.maps.Marker({
+                position: {
+                    lat: lat,
+                    lng: lng
+                },
+                map: map
+            });
+
+            map.setCenter({
+                lat: lat,
+                lng: lng
+            });
+
+        }
+
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMWH14pdCK4xN9O6jqv4GrMPbWvU9KWCQ&callback=initMap" async defer></script>
+
+</body>
+</html>
